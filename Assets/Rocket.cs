@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Rocket : MonoBehaviour
 {
@@ -18,10 +15,27 @@ public class Rocket : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        ProcessInput();
+        Thrust();
+        Rotate();
     }
 
-    private void ProcessInput()
+    private void Rotate()
+    {
+        rigidbody.freezeRotation = true;// Take manual control of the rotation
+        if (Input.GetKey(KeyCode.A))
+        {
+            //print("A pressed, going left");
+            transform.Rotate(Vector3.forward);
+        }
+        else if (Input.GetKey(KeyCode.D))
+        {
+            //print("D pressed, going right");
+            transform.Rotate(-Vector3.forward);
+        }
+        rigidbody.freezeRotation = false;// resume physics control of the rotation
+    }
+
+    private void Thrust()
     {
         if (Input.GetKey(KeyCode.Space)) // Can thrust while rotating
         {
@@ -35,16 +49,6 @@ public class Rocket : MonoBehaviour
         else
         {
             audioSource.Stop();
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            //print("A pressed, going left");
-            transform.Rotate(Vector3.forward);
-        }
-        else if (Input.GetKey(KeyCode.D))
-        {
-            //print("D pressed, going right");
-            transform.Rotate(-Vector3.forward);
         }
     }
 }
